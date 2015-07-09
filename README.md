@@ -14,7 +14,7 @@ Enter Docker. Now it is possible to run Titan and it's dependencies in separate 
 
 ## Titan
 
-This container is using Titan 0.5.0. Please refer to
+This container is using Titan 0.9.0. Please refer to
 its [page](https://github.com/thinkaurelius/titan/wiki/Downloads) for more information.
 
 ## Tinkerpop and Rexster
@@ -38,9 +38,9 @@ elegance to query graphs.
 The minimum system requirements for this stack is 1 GB with 2 cores.
 
 ```
-docker run -d --name es1 dockerfile/elasticsearch
-docker run -d --name cs1 poklet/cassandra
-docker run -d -P --name mytitan --link es1:elasticsearch --link cs1:cassandra apobbati/titan-rexster
+docker run -d --name es1 itzg/elasticsearch
+docker run -d --name cas1 poklet/cassandra
+docker run -d -P --name mytitan --link es1:elasticsearch --link cas1:cassandra elubow/titan-rexster
 ```
 
 ### Ports
