@@ -30,16 +30,6 @@ wait_for_startup() {
     return 1
 }
 
-IN=rexster-titan.xml.template
-OUT=rexster-titan.xml
-
-cp $IN $OUT
-
-sed -i "s/_CASSANDRA_HOSTNAME_/${CASSANDRA_PORT_9160_TCP_ADDR}/g" $OUT
-sed -i "s/_CASSANDRA_TCP_PORT_/${CASSANDRA_PORT_9160_TCP_PORT}/g" $OUT
-sed -i "s/_ELASTICSEARCH_HOSTNAME_/${ELASTICSEARCH_PORT_9200_TCP_ADDR}/g" $OUT
-sed -i "s/_ELASTICSEARCH_TCP_PORT_/${ELASTICSEARCH_PORT_9200_TCP_PORT}/g" $OUT
-
 ELASTICSEARCH_STARTUP_TIMEOUT_S=60
 CASSANDRA_STARTUP_TIMEOUT_S=60
 
@@ -57,5 +47,12 @@ wait_for_startup Cassandra \
 	return 1
 }
 
-$BIN/rexster.sh -s -c ../$OUT
+# use cassandra backed db instead of berkeleyje
+sed -i "s/titan-berkeleyje-server.properties/titan-cassandra-server.properties/g" conf/gremlin-server/gremlin-server.yaml
 
+# create the backing file
+echo "gremlin.graph=com.thinkaurelius.titan.core.TitanFactory
+storage.backend=cassandra
+storage.hostname=$CASSANDRA_PORT_9160_TCP_ADDR" > conf/gremlin-server/titan-cassandra-server.properties
+
+$BIN/gremlin-server.sh conf/gremlin-server/gremlin-server.yaml

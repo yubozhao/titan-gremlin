@@ -1,4 +1,4 @@
-FROM dockerfile/java:latest
+FROM java:latest
 
 MAINTAINER Eric Lubow <eric@lubow.org>
 
@@ -9,7 +9,6 @@ RUN curl -o /opt/titan.zip http://s3.thinkaurelius.com/downloads/titan/titan-0.9
 RUN unzip /opt/titan.zip -d /opt/ && \
     rm /opt/titan.zip
 
-ADD rexster-titan.xml.template /opt/titan-0.9.0-M2-hadoop1/
 ADD run.sh /opt/titan-0.9.0-M2-hadoop1/
 
 EXPOSE 8182

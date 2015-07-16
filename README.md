@@ -43,6 +43,18 @@ docker run -d --name cas1 poklet/cassandra
 docker run -d -P --name mytitan --link es1:elasticsearch --link cas1:cassandra elubow/titan-rexster
 ```
 
+I run with a 3 node Cassandra cluster and some local ports exported, like so:
+
+```
+docker run -d --name es1 -p 9200:9200 itzg/elasticsearch
+
+docker run -d --name cas1 -p 7000:7000 -p 7001:7001 -p 7199:7199 -p 9160:9160 -p 9042:9042 poklet/cassandra
+docker run -d --name cas2 poklet/cassandra start `docker inspect --format '{{ .NetworkSettings.IPAddress }}' cas1`
+docker run -d --name cas3 poklet/cassandra start `docker inspect --format '{{ .NetworkSettings.IPAddress }}' cas1`
+
+docker run -d --link es1:elasticsearch --link cas1:cassandra -p 8182:8182 -p 8183:8183 -p 8184:8184 --name titan1 titan
+```
+
 ### Ports
 
 8182: HTTP port for REST API
