@@ -53,7 +53,7 @@ docker run -d --link es1:elasticsearch --link cas1:cassandra -p 8182:8182 -p 818
 To test out the REST API (over Boot2docker):
 
 ```
-curl http://localhost:8182/graphs/graph/vertices
+curl "http://localhost:8182?gremlin=100-1"
 ```
 
 ## Dependencies
