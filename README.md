@@ -53,7 +53,9 @@ docker run -d --link es1:elasticsearch --link cas1:cassandra -p 8182:8182 -p 818
 To test out the REST API (over Boot2docker):
 
 ```
-curl "http://localhost:8182?gremlin=100-1"
+curl "http://docker.local:8182?gremlin=100-1"
+curl "http://docker.local:8182?gremlin=g.addV('Name','Eric')"
+curl "http://docker.local:8182?gremlin=g.V()"
 ```
 
 ## Dependencies
@@ -61,8 +63,7 @@ curl "http://localhost:8182?gremlin=100-1"
 I've tested this container with the following containers:
 
 	- poklet/cassandra: This is the Cassandra Storage backend for Titan. It scales well for large datasets.
-	- dockerfile/elasticsearch: This is the ElasticSearch Indexing backend for Titan. It provides search
-		capabilities for Titan graph datasets.
+	- dockerfile/elasticsearch: This is the ElasticSearch Indexing backend for Titan. It provides search capabilities for Titan graph datasets.
 
 ## Roadmap
 
