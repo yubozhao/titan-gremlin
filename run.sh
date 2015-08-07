@@ -33,12 +33,12 @@ wait_for_startup() {
 ELASTICSEARCH_STARTUP_TIMEOUT_S=60
 CASSANDRA_STARTUP_TIMEOUT_S=60
 
-#wait_for_startup Elasticsearch \
-#	$ELASTICSEARCH_PORT_9200_TCP_ADDR \
-#	$ELASTICSEARCH_PORT_9200_TCP_PORT \
-#	$ELASTICSEARCH_STARTUP_TIMEOUT_S || {
-#   return 1
-#}
+wait_for_startup Elasticsearch \
+	$ELASTICSEARCH_PORT_9200_TCP_ADDR \
+	$ELASTICSEARCH_PORT_9200_TCP_PORT \
+	$ELASTICSEARCH_STARTUP_TIMEOUT_S || {
+   return 1
+}
 
 wait_for_startup Cassandra \
 	$CASSANDRA_PORT_9160_TCP_ADDR \
@@ -48,7 +48,7 @@ wait_for_startup Cassandra \
 }
 
 # use cassandra backed db instead of berkeleyje
-sed -i "s/host: localhost/host: 0.0.0.0/g" conf/gremlin-server/gremlin-server.yaml
+#sed -i "s/host: localhost/host: 0.0.0.0/g" conf/gremlin-server/gremlin-server.yaml
 sed -i "s/titan-berkeleyje-server.properties/titan-cassandra-server.properties/g" conf/gremlin-server/gremlin-server.yaml
 sed -i "s/channelizer: org.apache.tinkerpop.gremlin.server.channel.WebSocketChannelizer/channelizer: org.apache.tinkerpop.gremlin.server.channel.HttpChannelizer/g" conf/gremlin-server/gremlin-server.yaml
 
