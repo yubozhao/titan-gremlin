@@ -27,9 +27,9 @@ manipulating and access Graph databases.
 The minimum system requirements for this stack is 1 GB with 2 cores.
 
 ```
-docker run -d --name es1 itzg/elasticsearch
+docker run -d --name es elasticsearch
 docker run -d --name cas1 poklet/cassandra
-docker run -d -P --name mytitan --link es1:elasticsearch --link cas1:cassandra elubow/titan-rexster
+docker run -d -P --name titan --link es:elasticsearch --link cas1:cassandra yubozhao/titan-gremlin
 ```
 
 I run with a 3 node Cassandra cluster and some local ports exported, like so:
