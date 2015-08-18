@@ -30,18 +30,19 @@ The minimum system requirements for this stack is 1 GB with 2 cores.
 docker run -d --name es elasticsearch
 docker run -d --name cas1 poklet/cassandra
 docker run -d -P --name titan --link es:elasticsearch --link cas1:cassandra yubozhao/titan-gremlin
+docker run -d --link es:elasticsearch --link cas1:cassandra -p 8182:8182 -p 8183:8183 -p 8184:8184 --name titan yubozhao/titan-gremlin
 ```
 
 I run with a 3 node Cassandra cluster and some local ports exported, like so:
 
 ```
-docker run -d --name es1 -p 9200:9200 itzg/elasticsearch
+docker run -d --name es elasticsearch
 
 docker run -d --name cas1 -p 7000:7000 -p 7001:7001 -p 7199:7199 -p 9160:9160 -p 9042:9042 poklet/cassandra
 docker run -d --name cas2 poklet/cassandra start `docker inspect --format '{{ .NetworkSettings.IPAddress }}' cas1`
 docker run -d --name cas3 poklet/cassandra start `docker inspect --format '{{ .NetworkSettings.IPAddress }}' cas1`
 
-docker run -d --link es1:elasticsearch --link cas1:cassandra -p 8182:8182 -p 8183:8183 -p 8184:8184 --name titan1 titan
+docker run -d --link es:elasticsearch --link cas1:cassandra -p 8182:8182 -p 8183:8183 -p 8184:8184 --name titan yubozhao/titan-gremlin
 ```
 
 ### Ports
