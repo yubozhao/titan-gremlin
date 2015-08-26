@@ -29,7 +29,7 @@ The minimum system requirements for this stack is 1 GB with 2 cores.
 ```
 docker run -d --name es elasticsearch
 docker run -d --name cas1 poklet/cassandra
-docker run -d -P --name titan --link es:elasticsearch --link cas1:cassandra yubozhao/titan-gremlin
+//docker run -d -P --name titan --link es:elasticsearch --link cas1:cassandra yubozhao/titan-gremlin
 docker run -d --link es:elasticsearch --link cas1:cassandra -p 8182:8182 -p 8183:8183 -p 8184:8184 --name titan yubozhao/titan-gremlin
 ```
 
